@@ -1,0 +1,5 @@
+[
+  {"name": "cert-manager", "namespace": "cert-manager", "chart": "cert-manager-v1.14.4", "app_version": "v1.14.4", "status": "deployed"},
+  {"name": "ingress", "namespace": "ingress-nginx", "chart": "ingress-nginx-4.10.0", "app_version": "1.10.0", "status": "deployed"},
+  {"name": "legacy", "namespace": "ops", "chart": "legacy-operator-2.4.1", "app_version": "2.4.1", "status": "deployed"}
+]

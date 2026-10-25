@@ -1,0 +1,24 @@
+# Demo manifests (fictional app) containing APIs removed in recent Kubernetes versions.
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata: {name: nightly-report, namespace: billing}
+spec:
+  schedule: "0 2 * * *"
+  jobTemplate: {spec: {template: {spec: {restartPolicy: OnFailure, containers: [{name: r, image: busybox}]}}}}
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata: {name: api, namespace: billing}
+spec: {minAvailable: 1, selector: {matchLabels: {app: api}}}
+---
+apiVersion: flowcontrol.apiserver.k8s.io/v1beta3
+kind: FlowSchema
+metadata: {name: batch-jobs}
+spec: {priorityLevelConfiguration: {name: workload-low}, matchingPrecedence: 9000}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: api, namespace: billing}
+spec:
+  selector: {matchLabels: {app: api}}
+  template: {metadata: {labels: {app: api}}, spec: {containers: [{name: api, image: nginx}]}}

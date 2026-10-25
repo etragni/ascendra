@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ascendra"
+version = "0.1.0"
+description = "Agentic infrastructure upgrades: a crew of AI agents that inventory, research, check compatibility, plan and explain upgrades. Kubernetes first; Linux and VMware next."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+authors = [{ name = "Evangelista Tragni", email = "evantragni@gmail.com" }]
+keywords = ["kubernetes", "upgrade", "helm", "agents", "agentic-ai", "platform-engineering", "lifecycle", "sovereign"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: System :: Systems Administration",
+  "License :: OSI Approved :: Apache Software License",
+]
+dependencies = ["pydantic>=2.6", "pyyaml>=6.0", "httpx>=0.27", "typer>=0.12", "rich>=13.7"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.urls]
+Repository = "https://github.com/evantragni/ascendra"
+
+[project.scripts]
+ascendra = "ascendra.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ascendra"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

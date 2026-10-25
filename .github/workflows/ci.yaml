@@ -1,0 +1,20 @@
+name: ci
+on:
+  push: {branches: [main]}
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: {python: ["3.11", "3.12", "3.13"]}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "${{ matrix.python }}"}
+      - run: pip install -e '.[dev]'
+      - run: ruff check .
+      - run: pytest -q
+      - name: offline demo
+        run: >
+          ascendra kubernetes plan --target 1.32 --offline --current-version 1.29.4 --config examples/ascendra.yaml
+          --helm-releases examples/helm-releases.json --manifests examples/manifests --no-llm || test $? -eq 1

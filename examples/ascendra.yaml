@@ -1,0 +1,19 @@
+# Shared LLM settings, used by the LLM-powered agents of every target
+llm:
+  provider: anthropic      # or "openai" for any OpenAI-compatible endpoint (vLLM, Ollama, LiteLLM...)
+  # model: claude-sonnet-5-5
+  # base_url: http://localhost:11434/v1
+
+kubernetes:
+  cluster: demo-cluster
+  # chart name -> Helm repository URL (or a local directory with an index.yaml)
+  charts:
+    cert-manager: ./examples/repo
+    ingress-nginx: ./examples/repo
+    legacy-operator: ./examples/repo
+    # cert-manager: https://charts.jetstack.io
+  ignore_releases: []      # e.g. ["kube-system/some-release"]
+  allow_prerelease_charts: false
+
+# linux:   (planned)
+# vmware:  (planned)
